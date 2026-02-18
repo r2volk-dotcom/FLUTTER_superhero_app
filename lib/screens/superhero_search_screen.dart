@@ -23,18 +23,29 @@ class _SuperheroSearchScreenState extends State<SuperheroSearchScreen> {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               decoration: InputDecoration(
-                hintText: "Busca un superheroe",
+                hintText: "Busca un Superheroe",
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
               ),
               onChanged: (text) {
                 setState(() {
                   _superheroInfo = repository.fetchSuperHeroInfo(text);
-                  print("el texto es $text");
+                  print("el texto es $_superheroInfo");
                 });
               },
             ),
           ),
+          FutureBuilder(future: _superheroInfo, builder: (context,snapshot){
+            if(snapshot.connectionState == ConnectionState.waiting){
+              return CircularProgressIndicator();
+            }else if (snapshot.hasError){
+              return Text("Error: ${snapshot.error}");
+            }else if(snapshot.hasData){
+              return Text("${snapshot.data?.response}");
+            }else{
+              return Text("No hay resultados");
+            }
+          })        
         ],
       ),
     );
