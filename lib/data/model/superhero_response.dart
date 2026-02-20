@@ -13,7 +13,7 @@ class SuperheroResponse {
   // Constructor factory
   // Se usa para crear un objeto a partir de un JSON (Map)
   factory SuperheroResponse.fromJson(Map<String, dynamic> json) {
-    var list = json["result"] as List;
+    var list = json["results"] as List;
     
     List<SuperheroDetailResponse> heroList = list.map((hero) => SuperheroDetailResponse.fromJson(hero)).toList();
 
